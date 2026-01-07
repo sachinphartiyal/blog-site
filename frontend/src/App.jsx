@@ -6,6 +6,7 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import SingleBlog from "./pages/SingleBlog";
+import EditBlog from "./pages/EditBlog";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/register" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/blog/:id" element={<SingleBlog />} />
+        <Route path="/blog/edit/:id" element={<EditBlog />} />
       </Routes>
       <Footer />
       <ToastContainer />
@@ -31,3 +33,4 @@ const App = () => {
   );
 };
 export default App;
+

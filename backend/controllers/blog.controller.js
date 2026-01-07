@@ -92,3 +92,46 @@ export const userBlogs = async (req, res) => {
   }
 };
 
+export const updateBlog = async (req, res) => {
+  try {
+    const { title, category, description } = req.body;
+    const blog = await Blog.findById(req.params.id);
+
+    if (!blog) {
+      return res
+        .status(404)
+        .json({ message: "Blog not found", success: false });
+    }
+
+    // Authorization check - only author can edit
+    if (blog.author.id.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ message: "Not authorized to edit this blog", success: false });
+    }
+
+    // Update fields
+    blog.title = title || blog.title;
+    blog.category = category || blog.category;
+    blog.description = description || blog.description;
+
+    // Handle image update if new image is provided
+    if (req.file) {
+      // Delete old image
+      fs.unlink(`uploads/${blog.image}`, () => { });
+      // Set new image
+      blog.image = req.file.filename;
+    }
+
+    await blog.save();
+
+    return res
+      .status(200)
+      .json({ message: "Blog updated successfully", success: true, blog });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Internal server error", success: false });
+  }
+};
+

@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("list");
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -176,7 +178,7 @@ const Dashboard = () => {
         ) : (
           <div className="p-4 h-auto">
             <h2 className="text-xl font-semibold mb-4">List of Blogs</h2>
-            
+
             <div className="overflow-x-auto">
               <table className="min-w-full border border-gray-300">
                 <thead>
@@ -184,6 +186,7 @@ const Dashboard = () => {
                     <th className="border px-4 py-2">Title</th>
                     <th className="border px-4 py-2">Category</th>
                     <th className="border px-4 py-2">Image</th>
+                    <th className="border px-4 py-2">Edit</th>
                     <th className="border px-4 py-2">Remove</th>
                   </tr>
                 </thead>
@@ -200,8 +203,16 @@ const Dashboard = () => {
                           className="w-16 h-16 object-cover mx-auto"
                         />
                       </td>
+                      <td className="border px-4 py-2">
+                        <button
+                          className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+                          onClick={() => navigate(`/blog/edit/${blog._id}`)}
+                        >
+                          Edit
+                        </button>
+                      </td>
                       <td
-                        className="border px-4 py-2 cursor-pointer"
+                        className="border px-4 py-2 cursor-pointer text-red-500 font-bold hover:text-red-700"
                         onClick={() => removeBlog(blog._id)}
                       >
                         X
