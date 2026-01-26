@@ -1,8 +1,7 @@
 import express from "express";
-
-// Checks whether the user is logged in
 import { isAuthenticated } from "../middlewares/isAuthenticated.js";
 import { upload } from "../middlewares/multer.js";
+
 import {
   allBlogs,
   createBlog,
