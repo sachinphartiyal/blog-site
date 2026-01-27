@@ -9,9 +9,9 @@ import SingleBlog from "./pages/SingleBlog";
 import EditBlog from "./pages/EditBlog";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
-import { ToastContainer } from "react-toastify";
 import Dashboard from "./pages/Dashboard";
+import { ToastContainer } from "react-toastify";
+
 const App = () => {
   return (
     <div className="max-w-7xl mx-auto">
@@ -27,10 +27,10 @@ const App = () => {
         <Route path="/blog/:id" element={<SingleBlog />} />
         <Route path="/blog/edit/:id" element={<EditBlog />} />
       </Routes>
-      <Footer />
       <ToastContainer />
     </div>
   );
 };
+
 export default App;
 

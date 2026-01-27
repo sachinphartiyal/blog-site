@@ -10,24 +10,28 @@ const BlogCard = ({
   date,
 }) => {
   return (
-    <div className="border-1 border-gray-300 shadow-md p-3 rounded-md">
+    <div className="border-1 border-gray-300 shadow-lg p-4 rounded-md">
+      <img
+        src={`${import.meta.env.VITE_API_URL}/images/${image}`}
+        alt="Blog Image"
+        className="w-full h-48 rounded-md transform duration-300 hover:scale-95"
+      />
+
+      <p className="text-purple-800 font-semibold text-lg my-3 ">{category}</p>
+
       <Link to={`/blog/${id}`}>
-        <img
-          src={`http://localhost:4000/images/${image}`}
-          alt=""
-          className="flex items-center justify-center w-full mx-auto cursor-pointer transform duration-300 hover:scale-105"
-        />
+        <h1 className="text-xl font-bold">{title}</h1>
       </Link>
-      <p className="text-[#4B6BFB] font-semibold my-3 ">{category}</p>
-      <h1 className="text-xl font-bold">{title}</h1>
 
       <div className="flex gap-3 items-center my-3">
         <img
           className="w-8 h-8 rounded-full"
-          src={`http://localhost:4000/images/${author_image}`}
-          alt=""
+          src={`${import.meta.env.VITE_API_URL}/images/${author_image}`}
+          alt="Author Image"
         />
-        <p className="text-lg font-bold text-gray-600">{author_name}</p>
+
+        <p className="text-lg font-semibold text-gray-600">{author_name}</p>
+
         <p className="text-lg font-bold text-gray-600">
           {new Date(date).toLocaleDateString("en-US", {
             month: "long",
@@ -39,4 +43,5 @@ const BlogCard = ({
     </div>
   );
 };
+
 export default BlogCard;

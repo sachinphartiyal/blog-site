@@ -66,7 +66,7 @@ const Dashboard = () => {
     const allBlogs = async () => {
       try {
         const res = await axios
-          .get("http://localhost:4000/blog/all",
+          .get("http://localhost:4000/blog/user/blogs",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -80,7 +80,7 @@ const Dashboard = () => {
       }
     };
     allBlogs();
-  }, [blogs]); 
+  }, [blogs]);
 
   const removeBlog = async (blogId) => {
     try {
@@ -193,32 +193,32 @@ const Dashboard = () => {
 
                 <tbody>
                   {blogs.map((blog) => (
-                    <tr key={blog._id} className="text-center">
-                      <td className="border px-4 py-2">{blog.title}</td>
-                      <td className="border px-4 py-2">{blog.category}</td>
-                      <td className="border px-4 py-2">
-                        <img
-                          src={`http://localhost:4000/images/${blog.image}`}
-                          alt={blog.title}
-                          className="w-16 h-16 object-cover mx-auto"
-                        />
-                      </td>
-                      <td className="border px-4 py-2">
-                        <button
-                          className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
-                          onClick={() => navigate(`/blog/edit/${blog._id}`)}
+                      <tr key={blog._id} className="text-center">
+                        <td className="border px-4 py-2">{blog.title}</td>
+                        <td className="border px-4 py-2">{blog.category}</td>
+                        <td className="border px-4 py-2">
+                          <img
+                            src={`http://localhost:4000/images/${blog.image}`}
+                            alt={blog.title}
+                            className="w-16 h-16 object-cover mx-auto"
+                          />
+                        </td>
+                        <td className="border px-4 py-2">
+                          <button
+                            className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+                            onClick={() => navigate(`/blog/edit/${blog._id}`)}
+                          >
+                            Edit
+                          </button>
+                        </td>
+                        <td
+                          className="border px-4 py-2 cursor-pointer text-red-500 font-bold hover:text-red-700"
+                          onClick={() => removeBlog(blog._id)}
                         >
-                          Edit
-                        </button>
-                      </td>
-                      <td
-                        className="border px-4 py-2 cursor-pointer text-red-500 font-bold hover:text-red-700"
-                        onClick={() => removeBlog(blog._id)}
-                      >
-                        X
-                      </td>
-                    </tr>
-                  ))}
+                          X
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

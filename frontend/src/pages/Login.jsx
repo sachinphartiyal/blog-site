@@ -12,20 +12,19 @@ const Login = () => {
 
   const { loginUser } = useContext(StoreContext);
 
-  // const token = localStorage.getItem("token");
-
   const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:4000/user/login",
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/user/login`,
         formData,
         {
           headers: {
@@ -34,7 +33,7 @@ const Login = () => {
         }
       );
 
-      console.log("res", res);
+      // console.log(`Response: ${res.data.message}`);
 
       if (res.data.success) {
         const { user, token } = res.data;
@@ -48,16 +47,18 @@ const Login = () => {
       setLoading(false);
     }
   };
+
   return (
     <div>
       <div className="w-full py-12 mx-auto flex items-center justify-center ">
-        <div className="w-full bg-white max-w-md p-5 mx-auto py-6 border-1 border-gray-200 shadow-md">
+        <div className="w-full bg-stone-50 max-w-md p-5 mx-auto py-6 border-1 border-gray-200 shadow-md rounded-2xl">
           <h1 className="text-lg font-bold text-center text-gray-700">
-            Login into your account!
+            Log in into your account
           </h1>
+
           <form
             onSubmit={submitHandler}
-            className="flex flex-col gap-5 mt-5 w-full"
+            className="flex flex-col gap-5 mt-5 w-full items-center justify-center"
           >
             <input
               name="email"
@@ -65,7 +66,7 @@ const Login = () => {
               onChange={onChangeHandler}
               type="email"
               placeholder="Your email"
-              className="w-full p-2 border border-gray-300 rounded outline-none"
+              className="w-full p-2 border border-gray-300 rounded-lg outline-none bg-white"
               required
             />
 
@@ -75,24 +76,26 @@ const Login = () => {
               onChange={onChangeHandler}
               type="password"
               placeholder="Your password"
-              className="w-full p-2 border border-gray-300 rounded outline-none"
+              className="w-full p-2 border border-gray-300 rounded-lg outline-none bg-white"
               required
             />
 
-            <button className="bg-orange-600 text-white px-6 py-2 w-full cursor-pointer">
-              Sign In
+            <button
+              className="bg-neutral-600 hover:bg-neutral-950 duration-400 text-white px-6 py-4 w-30 rounded-2xl cursor-pointer">
+              Log in
             </button>
           </form>
-          
+
           <p className="text-center mt-4">
             Don't have an account?{" "}
-            <Link to={"/register"} className="text-orange-600 cursor-pointer">
+            <Link to={"/register"} className="text-purple-800 cursor-pointer">
               Register Here
-            </Link>{" "}
+            </Link>
           </p>
         </div>
       </div>
     </div>
   );
 };
+
 export default Login;

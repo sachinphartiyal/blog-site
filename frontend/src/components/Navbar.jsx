@@ -1,45 +1,49 @@
 import { Link } from "react-router-dom";
-import { assets } from "../assets/assets";
 import { useContext } from "react";
 import StoreContext from "../context/StoreContext";
+
 const Navbar = () => {
   const { user, logoutUser } = useContext(StoreContext);
+
   return (
-    <nav className="bg-white p-4 stciky top-0">
+    <nav className="bg-stone-100 p-4 sticky border-b border-gray-200 rounded-2xl top-2">
       <div className="flex container mx-auto justify-between items-center">
+
         {/* logo */}
-        <div className="flex gap-2 items-center">
+        <div className="">
           <Link to={"/"}>
-            <p className="hidden sm:block text-2xl">
-              PhartiyalJi <span className="font-bold text-2xl">Blogs</span>
+            <p className="text-2xl">
+              PhartiyalJi <span className="font-bold text-stone-600 hover:text-neutral-950 duration-300">Blogs</span>
             </p>
           </Link>
-
         </div>
 
-        {/* center content */}
+        {/* center routes */}
         <ul className="hidden sm:flex gap-5 text-xl font-normal justify-center items-center text-gray-700">
           <Link
             to="/"
-            className="cursor-pointer hover:text-orange-500 duration-300"
+            className="cursor-pointer hover:text-gray-400 duration-300"
           >
             Home
           </Link>
+
           <Link
             to="/blogs"
-            className="cursor-pointer hover:text-orange-500 duration-300"
+            className="cursor-pointer hover:text-gray-400 duration-300"
           >
             Blogs
           </Link>
+
           <Link
             to="/about"
-            className="cursor-pointer hover:text-orange-500 duration-300"
+            className="cursor-pointer hover:text-gray-400 duration-300"
           >
             About
           </Link>
+
           <Link
             to="/contact"
-            className="cursor-pointer hover:text-orange-500 duration-300"
+            className="cursor-pointer hover:text-gray-400 duration-300"
           >
             Contact
           </Link>
@@ -47,29 +51,34 @@ const Navbar = () => {
 
         {user ? (
           <div className="flex gap-2">
+            {/* Dashboard button */}
             <Link
               to={"/dashboard"}
-              className="bg-black px-6 py-2 rounded-full text-white"
+              className="bg-neutral-400 hover:bg-neutral-500 duration-400 px-6 py-2 rounded-full text-white"
             >
               Dashboard
             </Link>
-            <button
-              onClick={logoutUser}
-              className="bg-orange-500 text-white px-6 py-2 rounded-full cursor-pointer hover:bg-orange-600 duration-300"
-            >
-              Logout
-            </button>
+
+            {/* Logout button */}
+            <Link to={"/login"}>
+              <button
+                onClick={logoutUser}
+                className="bg-neutral-600 hover:bg-neutral-950 duration-400 text-white px-6 py-2 rounded-full cursor-pointer"
+              >
+                Logout
+              </button>
+            </Link>
           </div>
         ) : (
           <Link
             to={"/login"}
-            className="bg-orange-500 text-white px-8 py-2 rounded-full cursor-pointer hover:bg-orange-600 duration-300"
+            className="bg-neutral-600 hover:bg-neutral-950 duration-400 text-white px-8 py-2 rounded-full cursor-pointer"
           >
-            Signin
+            Sign In
           </Link>
         )}
       </div>
-    </nav>
+    </nav >
   );
 };
 export default Navbar;

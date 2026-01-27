@@ -12,6 +12,7 @@ const Signup = () => {
   });
 
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
 
   const onChangeHandler = (e) => {
@@ -24,6 +25,7 @@ const Signup = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
     try {
       const data = new FormData();
       data.append("name", formData.name);
@@ -33,11 +35,11 @@ const Signup = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:4000/user/register",
+        `${import.meta.env.VITE_API_URL}/user/register`,
         data,
         {
           headers: {
-            "Content-Type": "multipart/formData",
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -55,13 +57,13 @@ const Signup = () => {
 
   return (
     <div className="w-full py-12 mx-auto flex items-center justify-center ">
-      <div className="w-full bg-white max-w-md p-5 mx-auto py-6 border-1 border-gray-200 shadow-md">
+      <div className="w-full bg-stone-50 max-w-md p-5 mx-auto py-6 border-1 border-gray-200 shadow-2xl">
         <h1 className="text-lg font-bold text-center text-gray-700">
-          Create your account!
+          Create your account
         </h1>
         <form
           onSubmit={submitHandler}
-          className="flex flex-col gap-5 mt-5 w-full"
+          className="flex flex-col gap-5 mt-5 w-full items-center justify-center"
         >
           <input
             onChange={onChangeHandler}
@@ -69,7 +71,7 @@ const Signup = () => {
             value={formData.name}
             type="text"
             placeholder="Your name"
-            className="w-full p-2 border border-gray-300 rounded outline-none"
+            className="w-full p-2 border border-gray-300 rounded-lg outline-none bg-white"
             required
           />
 
@@ -79,7 +81,7 @@ const Signup = () => {
             value={formData.email}
             type="email"
             placeholder="Your email"
-            className="w-full p-2 border border-gray-300 rounded outline-none"
+            className="w-full p-2 border border-gray-300 rounded-lg outline-none bg-white"
             required
           />
 
@@ -89,7 +91,7 @@ const Signup = () => {
             value={formData.password}
             type="password"
             placeholder="Your password"
-            className="w-full p-2 border border-gray-300 rounded outline-none"
+            className="w-full p-2 border border-gray-300 rounded-lg outline-none bg-white"
             required
           />
 
@@ -97,18 +99,19 @@ const Signup = () => {
             onChange={fileHandler}
             accept="image/*"
             type="file"
-            className="w-full p-2 border border-gray-300 rounded outline-none"
+            className="w-full p-2 border border-gray-300 rounded-lg outline-none bg-white"
             required
           />
 
-          <button className="bg-orange-600 text-white px-6 py-2 w-full cursor-pointer">
-            Signup
+          <button
+            className="bg-neutral-600 hover:bg-neutral-950 duration-400 text-white px-6 py-4 w-30 rounded-2xl cursor-pointer">
+            Register
           </button>
         </form>
 
         <p className="text-center mt-4">
           Already have an account?{" "}
-          <Link to={"/login"} className="text-orange-600 cursor-pointer">
+          <Link to={"/login"} className="text-purple-800 cursor-pointer">
             Login Here
           </Link>
         </p>
