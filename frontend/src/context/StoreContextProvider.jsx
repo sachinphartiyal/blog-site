@@ -1,15 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
-// Creates a context object. null is the default value.
-// Anyone can use it using useContext(StoreContext)
-export const StoreContext = createContext(null);
-
-// This component provides the context to its children.
-// This is a wrapper component.
-// children means All components wrapped inside <StoreContextProvider>
+import StoreContext from "./StoreContext";
 
 const StoreContextProvider = ({ children }) => {
+  // global state variables
   const [user, setUser] = useState(null);
   const [blogData, setBlogData] = useState([]);
 
@@ -17,7 +11,7 @@ const StoreContextProvider = ({ children }) => {
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(storedUser); // REQUIRED: Parse JSON string to object
+      setUser(JSON.parse(storedUser)); // REQUIRED: Parse JSON string to object
     }
   }, []);
 

@@ -1,7 +1,7 @@
 import Hero from "../components/Hero";
 import BlogCard from "../components/BlogCard";
 import { useContext } from "react";
-import { StoreContext } from "../context/StoreContext";
+import StoreContext from "../context/StoreContext";
 
 const Blogs = () => {
   const { blogData } = useContext(StoreContext);

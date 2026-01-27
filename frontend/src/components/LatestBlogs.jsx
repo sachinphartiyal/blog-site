@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import BlogCard from "./BlogCard";
-import { StoreContext } from "../context/StoreContext";
+import StoreContext from "../context/StoreContext";
 const LatestBlogs = () => {
   const { blogData } = useContext(StoreContext);
   return (

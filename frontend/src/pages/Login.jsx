@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { StoreContext } from "../context/StoreContext";
+import StoreContext from "../context/StoreContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({

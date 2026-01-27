@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { StoreContext } from "../context/StoreContext";
+import StoreContext from "../context/StoreContext";
 
 const SingleBlog = () => {
   const { id } = useParams();

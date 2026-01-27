@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useContext } from "react";
-import { StoreContext } from "../context/StoreContext";
+import StoreContext from "../context/StoreContext";
 const Navbar = () => {
   const { user, logoutUser } = useContext(StoreContext);
   return (
@@ -10,11 +10,11 @@ const Navbar = () => {
         {/* logo */}
         <div className="flex gap-2 items-center">
           <Link to={"/"}>
-            <img src={assets.logo} alt="" />
+            <p className="hidden sm:block text-2xl">
+              PhartiyalJi <span className="font-bold text-2xl">Blogs</span>
+            </p>
           </Link>
-          <p className="hidden sm:block text-2xl">
-            PhartiyalJi <span className="font-bold text-2xl">Blogs</span>
-          </p>
+
         </div>
 
         {/* center content */}

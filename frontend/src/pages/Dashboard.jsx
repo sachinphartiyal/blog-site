@@ -80,7 +80,7 @@ const Dashboard = () => {
       }
     };
     allBlogs();
-  }, [blogs]);
+  }, [blogs]); 
 
   const removeBlog = async (blogId) => {
     try {
