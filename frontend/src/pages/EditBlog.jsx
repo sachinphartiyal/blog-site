@@ -22,7 +22,7 @@ const EditBlog = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await axios.get(`http://localhost:4000/blog/${id}`);
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/blog/${id}`);
                 const blog = res.data.blog;
 
                 setFormData({
@@ -39,7 +39,6 @@ const EditBlog = () => {
                 setLoading(false);
             }
         };
-
         fetchBlog();
     }, [id]);
 
@@ -54,20 +53,18 @@ const EditBlog = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        // FormData is a built-in JavaScript object used to send form data (text + files) to the backend.
         const data = new FormData();
         data.append("title", formData.title);
         data.append("category", formData.category);
         data.append("description", formData.description);
 
-        // Only append image if a new one is selected
         if (formData.image) {
             data.append("image", formData.image);
         }
 
         try {
             const res = await axios.put(
-                `http://localhost:4000/blog/update/${id}`,
+                `${import.meta.env.VITE_API_URL}/blog/update/${id}`,
                 data,
                 {
                     headers: {
@@ -76,7 +73,6 @@ const EditBlog = () => {
                     },
                 }
             );
-
             toast.success(res.data.message);
             navigate("/dashboard");
         } catch (error) {
@@ -93,11 +89,11 @@ const EditBlog = () => {
     }
 
     return (
-        <div className="max-w-2xl mx-auto p-6">
+        <div className="bg-neutral-50 max-w-2xl mx-auto p-6 border-2 border-gray-200 rounded-md mt-10 mb-10">
+
             <h2 className="text-2xl font-bold mb-6">Edit Blog</h2>
 
             <form onSubmit={submitHandler} className="flex flex-col gap-4">
-                {/* Title */}
                 <div>
                     <label className="block mb-2 font-semibold">Title</label>
                     <input
@@ -107,11 +103,10 @@ const EditBlog = () => {
                         type="text"
                         placeholder="Blog title"
                         required
-                        className="border border-gray-300 rounded-md p-2 outline-none w-full"
+                        className="bg-white border border-gray-300 rounded-md p-2 outline-none w-full"
                     />
                 </div>
 
-                {/* Category */}
                 <div>
                     <label className="block mb-2 font-semibold">Category</label>
                     <input
@@ -121,11 +116,10 @@ const EditBlog = () => {
                         type="text"
                         placeholder="Category"
                         required
-                        className="border border-gray-300 rounded-md p-2 outline-none w-full"
+                        className="bg-white border border-gray-300 rounded-md p-2 outline-none w-full"
                     />
                 </div>
 
-                {/* Description */}
                 <div>
                     <label className="block mb-2 font-semibold">Description</label>
                     <textarea
@@ -135,18 +129,17 @@ const EditBlog = () => {
                         placeholder="Blog description"
                         required
                         rows="6"
-                        className="border border-gray-300 rounded-md p-2 outline-none w-full"
+                        className="bg-white border border-gray-300 rounded-md p-2 outline-none w-full"
                     />
                 </div>
 
-                {/* Current Image */}
                 <div>
                     <label className="block mb-2 font-semibold">Current Image</label>
                     {currentImage && (
                         <img
-                            src={`http://localhost:4000/images/${currentImage}`}
-                            alt="Current blog"
-                            className="w-48 h-48 object-cover rounded-md mb-2"
+                            src={`${import.meta.env.VITE_API_URL}/images/${currentImage}`}
+                            alt="Current blog image"
+                            className="w-48 h-48 object-cover rounded-2xl mb-2"
                         />
                     )}
                 </div>
@@ -169,7 +162,7 @@ const EditBlog = () => {
                 <div className="flex gap-4">
                     <button
                         type="submit"
-                        className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition"
+                        className="bg-neutral-600 text-white px-6 py-2 rounded-full hover:bg-neutral-950 duration-400 transition"
                     >
                         Update Blog
                     </button>

@@ -54,7 +54,7 @@ const Navbar = () => {
             {/* Dashboard button */}
             <Link
               to={"/dashboard"}
-              className="bg-neutral-400 hover:bg-neutral-500 duration-400 px-6 py-2 rounded-full text-white"
+              className="bg-gray-300 hover:bg-gray-400 duration-400 px-6 py-2 rounded-full text-black"
             >
               Dashboard
             </Link>
