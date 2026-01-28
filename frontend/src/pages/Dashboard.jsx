@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -15,10 +15,9 @@ const Dashboard = () => {
     image: null,
   });
 
-  const [blogs, setBlogs] = useState([]);
+  const [userBlogs, setUserBlogs] = useState([]);
 
   const onChangeHandler = (e) => {
-    // console.log(e.target.value);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -37,7 +36,7 @@ const Dashboard = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/blog/create",
+        `${import.meta.env.VITE_API_URL}/blog/create`,
         data,
         {
           headers: {
@@ -47,7 +46,6 @@ const Dashboard = () => {
         }
       );
 
-      console.log("res", res);
       toast.success(res.data.message);
 
       setFormData({
@@ -63,10 +61,10 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const allBlogs = async () => {
+    const allUserBlogs = async () => {
       try {
         const res = await axios
-          .get("http://localhost:4000/blog/user/blogs",
+          .get(`${import.meta.env.VITE_API_URL}/blog/user/blogs`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -74,18 +72,19 @@ const Dashboard = () => {
             }
           );
 
-        setBlogs(res.data.blogs);
+        setUserBlogs(res.data.blogs);
       } catch (error) {
-        console.log("error", error);
+        console.log(`Error in fetching user blogs: ${error}`);
+        toast.error(error.message);
       }
     };
-    allBlogs();
-  }, [blogs]);
+    allUserBlogs();
+  }, []);
 
   const removeBlog = async (blogId) => {
     try {
       const res = await axios.delete(
-        `http://localhost:4000/blog/delete/${blogId}`,
+        `${import.meta.env.VITE_API_URL}/blog/delete/${blogId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -94,7 +93,7 @@ const Dashboard = () => {
       );
 
       toast.success(res.data.message);
-      setBlogs(blogs.filter((blog) => blog._id !== blogId));
+      setUserBlogs(userBlogs.filter((blog) => blog._id !== blogId));
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -108,14 +107,14 @@ const Dashboard = () => {
         <h2 className="text-lg font-semibold mb-6 text-black">Dashboard</h2>
 
         <button
-          className={`w-full text-left py-2 px-4 mb-2 rounded ${activeTab === "post" ? "bg-orange-500" : "bg-gray-700"}`}
+          className={`w-full text-left py-2 px-4 mb-2 rounded-2xl ${activeTab === "post" ? "bg-stone-700" : "bg-stone-300"}`}
           onClick={() => setActiveTab("post")}
         >
           Post a Blog
         </button>
 
         <button
-          className={`w-full text-left py-2 px-4 rounded ${activeTab === "list" ? "bg-orange-500" : "bg-gray-700"}`}
+          className={`w-full text-left py-2 px-4 rounded-2xl ${activeTab === "list" ? "bg-stone-700" : "bg-stone-300"}`}
           onClick={() => setActiveTab("list")}
         >
           List of Blogs
@@ -166,7 +165,6 @@ const Dashboard = () => {
                     accept="image/*"
                     className="border border-gray-300 rounded-md p-2 outline-none w-full"
                   />
-
                 </div>
 
                 <button className="bg-black text-white w-full rounded-full border-none cursor-pointer py-2">
@@ -182,7 +180,7 @@ const Dashboard = () => {
             <div className="overflow-x-auto">
               <table className="min-w-full border border-gray-300">
                 <thead>
-                  <tr className="bg-gray-100">
+                  <tr className="bg-stone-100">
                     <th className="border px-4 py-2">Title</th>
                     <th className="border px-4 py-2">Category</th>
                     <th className="border px-4 py-2">Image</th>
@@ -192,33 +190,33 @@ const Dashboard = () => {
                 </thead>
 
                 <tbody>
-                  {blogs.map((blog) => (
-                      <tr key={blog._id} className="text-center">
-                        <td className="border px-4 py-2">{blog.title}</td>
-                        <td className="border px-4 py-2">{blog.category}</td>
-                        <td className="border px-4 py-2">
-                          <img
-                            src={`http://localhost:4000/images/${blog.image}`}
-                            alt={blog.title}
-                            className="w-16 h-16 object-cover mx-auto"
-                          />
-                        </td>
-                        <td className="border px-4 py-2">
-                          <button
-                            className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
-                            onClick={() => navigate(`/blog/edit/${blog._id}`)}
-                          >
-                            Edit
-                          </button>
-                        </td>
-                        <td
-                          className="border px-4 py-2 cursor-pointer text-red-500 font-bold hover:text-red-700"
-                          onClick={() => removeBlog(blog._id)}
+                  {userBlogs.map((blog) => (
+                    <tr key={blog._id} className="text-center">
+                      <td className="border px-4 py-2">{blog.title}</td>
+                      <td className="border px-4 py-2">{blog.category}</td>
+                      <td className="border px-4 py-2">
+                        <img
+                          src={`${import.meta.env.VITE_API_URL}/images/${blog.image}`}
+                          alt={blog.title}
+                          className="w-16 h-16 object-cover mx-auto"
+                        />
+                      </td>
+                      <td className="border px-4 py-2">
+                        <button
+                          className="bg-stone-200 text-black px-4 py-1 rounded hover:bg-stone-800 hover:text-white duration-400"
+                          onClick={() => navigate(`/blog/edit/${blog._id}`)}
                         >
-                          X
-                        </td>
-                      </tr>
-                    ))}
+                          Edit
+                        </button>
+                      </td>
+                      <td
+                        className="border px-4 py-2 cursor-pointer text-red-400 font-bold hover:text-red-700 duration-400"
+                        onClick={() => removeBlog(blog._id)}
+                      >
+                        X
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
