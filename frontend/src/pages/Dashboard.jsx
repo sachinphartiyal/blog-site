@@ -79,7 +79,7 @@ const Dashboard = () => {
       }
     };
     allUserBlogs();
-  }, []);
+  }, [token]);
 
   const removeBlog = async (blogId) => {
     try {

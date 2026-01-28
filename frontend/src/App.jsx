@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
 import { ToastContainer } from "react-toastify";
+import ProtectedRoute from "./components/ProtectRoute";
 
 const App = () => {
   return (
@@ -18,14 +19,17 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/blogs" element={<Blogs />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/blogs" element={<Blogs />} />
         <Route path="/blog/:id" element={<SingleBlog />} />
-        <Route path="/blog/edit/:id" element={<EditBlog />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/blog/edit/:id" element={<EditBlog />} />
+        </Route>
       </Routes>
       <ToastContainer />
     </div>
