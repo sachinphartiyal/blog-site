@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import StoreContext from "../context/StoreContext";
+import { validateEmail, validatePassword } from "../utils/validators";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -22,16 +23,31 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    const email = formData.email.trim();
+    const password = formData.password.trim();
+
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
+
     try {
       setLoading(true);
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/user/login`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await axios
+        .post(`${import.meta.env.VITE_API_URL}/user/login`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
       // console.log(`Response: ${res.data.message}`);
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { validateEmail, validatePassword } from "../utils/validators";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,18 @@ const Signup = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    const { email, password } = formData;
+
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
 
     try {
       const data = new FormData();
