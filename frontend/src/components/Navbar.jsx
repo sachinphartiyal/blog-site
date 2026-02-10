@@ -60,7 +60,7 @@ const Navbar = () => {
             </Link>
 
             {/* Logout button */}
-            <Link to={"/login"}>
+            <Link to={"/"}>
               <button
                 onClick={logoutUser}
                 className="bg-neutral-600 hover:bg-neutral-950 duration-400 text-white px-6 py-2 rounded-full cursor-pointer"
